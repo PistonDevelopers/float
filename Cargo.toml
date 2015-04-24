@@ -1,0 +1,14 @@
+[package]
+
+name = "piston-float"
+version = "0.0.0"
+authors = ["bvssvni <bvssvni@gmail.com>"]
+keywords = ["float", "piston"]
+description = "Traits for generic floats in game development"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/pistondevelopers/float.git"
+homepage = "https://github.com/pistondevelopers/float"
+
+[lib]
+name = "float"
