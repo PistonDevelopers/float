@@ -272,14 +272,20 @@ pub trait FromPrimitive {
 }
 
 impl FromPrimitive for f64 {
+    #[inline(always)]
     fn from_f64(t: f64) -> Self { t }
+    #[inline(always)]
     fn from_f32(t: f32) -> Self { t as f64 }
+    #[inline(always)]
     fn from_isize(t: isize) -> Self { t as f64 }
 }
 
 impl FromPrimitive for f32 {
+    #[inline(always)]
     fn from_f64(t: f64) -> Self { t as f32 }
+    #[inline(always)]
     fn from_f32(t: f32) -> Self { t }
+    #[inline(always)]
     fn from_isize(t: isize) -> Self { t as f32 }
 }
 
