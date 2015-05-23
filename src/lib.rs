@@ -10,6 +10,7 @@ pub trait Float:
     + Min + Max + Signum
     + Trig
     + PartialEq
+    + PartialOrd
     + Add<Self, Output = Self>
     + Mul<Self, Output = Self>
     + Sub<Self, Output = Self>
@@ -24,6 +25,7 @@ impl<T> Float for T where
     + Min + Max + Signum
     + Trig
     + PartialEq
+    + PartialOrd
     + Add<T, Output = T>
     + Mul<T, Output = T>
     + Sub<T, Output = T>
