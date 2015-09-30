@@ -270,6 +270,10 @@ pub trait FromPrimitive {
     fn from_f32(t: f32) -> Self;
     /// from a isze
     fn from_isize(t: isize) -> Self;
+    /// from a u32
+    fn from_u32(t: u32) -> Self;
+    /// from a i32
+    fn from_i32(t: i32) -> Self;
     // Add more as needed..
 }
 
@@ -280,6 +284,10 @@ impl FromPrimitive for f64 {
     fn from_f32(t: f32) -> Self { t as f64 }
     #[inline(always)]
     fn from_isize(t: isize) -> Self { t as f64 }
+    #[inline(always)]
+    fn from_u32(t: u32) -> Self { t as f64 }
+    #[inline(always)]
+    fn from_i32(t: i32) -> Self { t as f64 }
 }
 
 impl FromPrimitive for f32 {
@@ -289,6 +297,10 @@ impl FromPrimitive for f32 {
     fn from_f32(t: f32) -> Self { t }
     #[inline(always)]
     fn from_isize(t: isize) -> Self { t as f32 }
+    #[inline(always)]
+    fn from_u32(t: u32) -> Self { t as f32 }
+    #[inline(always)]
+    fn from_i32(t: i32) -> Self { t as f32 }
 }
 
 #[cfg(test)]
