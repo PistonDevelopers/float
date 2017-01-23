@@ -5,7 +5,8 @@ use std::ops::*;
 
 /// Convenience trait for floats.
 pub trait Float:
-    Copy + Radians + One + Zero + Sqrt
+    'static + Send + Sync
+    + Copy + Radians + One + Zero + Sqrt
     + FromPrimitive
     + Min + Max + Signum + Powf
     + Trig
@@ -20,7 +21,8 @@ pub trait Float:
     + Trig {}
 
 impl<T> Float for T where
-    T: Copy + Radians + One + Zero + Sqrt
+    T: 'static + Send + Sync
+    + Copy + Radians + One + Zero + Sqrt
     + FromPrimitive
     + Min + Max + Signum + Powf
     + Trig
