@@ -12,11 +12,11 @@ pub trait Float:
     + Trig
     + PartialEq
     + PartialOrd
-    + Add<Self, Output = Self>
-    + Mul<Self, Output = Self>
-    + Sub<Self, Output = Self>
-    + Div<Self, Output = Self>
-    + Rem<Self, Output = Self>
+    + Add<Self, Output = Self> + AddAssign<Self>
+    + Mul<Self, Output = Self> + MulAssign<Self>
+    + Sub<Self, Output = Self> + SubAssign<Self>
+    + Div<Self, Output = Self> + DivAssign<Self>
+    + Rem<Self, Output = Self> + RemAssign<Self>
     + Neg<Output = Self>
     + Trig {}
 
@@ -28,11 +28,11 @@ impl<T> Float for T where
     + Trig
     + PartialEq
     + PartialOrd
-    + Add<T, Output = T>
-    + Mul<T, Output = T>
-    + Sub<T, Output = T>
-    + Div<T, Output = T>
-    + Rem<T, Output = T>
+    + Add<T, Output = T> + AddAssign<T>
+    + Mul<T, Output = T> + MulAssign<T>
+    + Sub<T, Output = T> + SubAssign<T>
+    + Div<T, Output = T> + DivAssign<T>
+    + Rem<T, Output = T> + RemAssign<T>
     + Neg<Output = T>
     + Trig {}
 
