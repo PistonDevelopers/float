@@ -224,12 +224,32 @@ impl Sqrt for f64 {
 
 /// Basic trigonometry functions
 pub trait Trig {
-    /// Returns sine of self
+    /// Returns sine of self.
     fn sin(self) -> Self;
-    /// Returns cosine of self
+    /// Returns cosine of self.
     fn cos(self) -> Self;
-    /// Returns tangent of self
+    /// Returns tangent of self.
     fn tan(self) -> Self;
+    /// Returns inverse sine of self.
+    fn asin(self) -> Self;
+    /// Returns inverse cosine of self.
+    fn acos(self) -> Self;
+    /// Returns inverse tangent of self.
+    fn atan(self) -> Self;
+    /// Returns the four quadrant arctangent of self (y) and other (x).
+    fn atan2(self, other: Self) -> Self;
+    /// Returns hyperbolic sine of self.
+    fn sinh(self) -> Self;
+    /// Returns hyperbolic cosine of self.
+    fn cosh(self) -> Self;
+    /// Returns hyperbolic tangent of self.
+    fn tanh(self) -> Self;
+    /// Returns inverse hyperbolic sine of self.
+    fn asinh(self) -> Self;
+    /// Returns inverse hyperbolic cosine of self.
+    fn acosh(self) -> Self;
+    /// Returns inverse hyperbolic tangent of self.
+    fn atanh(self) -> Self;
 }
 
 impl Trig for f32 {
@@ -241,6 +261,36 @@ impl Trig for f32 {
 
     #[inline(always)]
     fn tan(self) -> f32 { self.tan() }
+
+    #[inline(always)]
+    fn asin(self) -> f32 { self.asin() }
+
+    #[inline(always)]
+    fn acos(self) -> f32 { self.acos() }
+
+    #[inline(always)]
+    fn atan(self) -> f32 { self.atan() }
+
+    #[inline(always)]
+    fn atan2(self, other: f32) -> f32 { self.atan2(other) }
+
+    #[inline(always)]
+    fn sinh(self) -> f32 { self.sinh() }
+
+    #[inline(always)]
+    fn cosh(self) -> f32 { self.cosh() }
+
+    #[inline(always)]
+    fn tanh(self) -> f32 { self.tanh() }
+
+    #[inline(always)]
+    fn asinh(self) -> f32 { self.asinh() }
+
+    #[inline(always)]
+    fn acosh(self) -> f32 { self.acosh() }
+
+    #[inline(always)]
+    fn atanh(self) -> f32 { self.atanh() }
 }
 
 impl Trig for f64 {
@@ -252,6 +302,36 @@ impl Trig for f64 {
 
     #[inline(always)]
     fn tan(self) -> f64 { self.tan() }
+
+    #[inline(always)]
+    fn asin(self) -> f64 { self.asin() }
+
+    #[inline(always)]
+    fn acos(self) -> f64 { self.acos() }
+
+    #[inline(always)]
+    fn atan(self) -> f64 { self.atan() }
+
+    #[inline(always)]
+    fn atan2(self, other: f64) -> f64 { self.atan2(other) }
+
+    #[inline(always)]
+    fn sinh(self) -> f64 { self.sinh() }
+
+    #[inline(always)]
+    fn cosh(self) -> f64 { self.cosh() }
+
+    #[inline(always)]
+    fn tanh(self) -> f64 { self.tanh() }
+
+    #[inline(always)]
+    fn asinh(self) -> f64 { self.asinh() }
+
+    #[inline(always)]
+    fn acosh(self) -> f64 { self.acosh() }
+
+    #[inline(always)]
+    fn atanh(self) -> f64 { self.atanh() }
 }
 
 /// Casts into another type.
