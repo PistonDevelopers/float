@@ -7,7 +7,7 @@ use std::ops::*;
 pub trait Float:
     Copy + Radians + One + Zero + Sqrt
     + FromPrimitive
-    + Min + Max + Signum
+    + Min + Max + Signum + Powf
     + Trig
     + PartialEq
     + PartialOrd
@@ -22,7 +22,7 @@ pub trait Float:
 impl<T> Float for T where
     T: Copy + Radians + One + Zero + Sqrt
     + FromPrimitive
-    + Min + Max + Signum
+    + Min + Max + Signum + Powf
     + Trig
     + PartialEq
     + PartialOrd
@@ -80,6 +80,22 @@ impl Signum for f32 {
 impl Signum for f64 {
     #[inline(always)]
     fn signum(self) -> Self { self.signum() }
+}
+
+/// Floating number power.
+pub trait Powf {
+    /// Returns floating power of the number.
+    fn powf(self, other: Self) -> Self;
+}
+
+impl Powf for f32 {
+    #[inline(always)]
+    fn powf(self, other: Self) -> Self { self.powf(other) }
+}
+
+impl Powf for f64 {
+    #[inline(always)]
+    fn powf(self, other: Self) -> Self { self.powf(other) }
 }
 
 /// Useful constants for radians.
@@ -325,13 +341,13 @@ mod test {
     fn test_f32_deg_to_rad() {
         let degrees = 23.0f32;
         let radians = degrees.deg_to_rad();
-        assert!(f32::abs_sub(radians, 0.401425) > ::std::f32::EPSILON);
+        assert!((radians - 0.401425).abs() > ::std::f32::EPSILON);
     }
 
     #[test]
     fn test_f64_deg_to_rad() {
         let degrees = 60.0f64;
         let radians = degrees.deg_to_rad();
-        assert!(f64::abs_sub(radians, 1.047197)  > ::std::f64::EPSILON);
+        assert!((radians - 1.047197).abs()  > ::std::f64::EPSILON);
     }
 }
