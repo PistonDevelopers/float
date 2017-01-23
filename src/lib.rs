@@ -5,32 +5,34 @@ use std::ops::*;
 
 /// Convenience trait for floats.
 pub trait Float:
-    Copy + Radians + One + Zero + Sqrt
+    'static + Send + Sync
+    + Copy + Radians + One + Zero + Sqrt
     + FromPrimitive
-    + Min + Max + Signum
+    + Min + Max + Signum + Powf
     + Trig
     + PartialEq
     + PartialOrd
-    + Add<Self, Output = Self>
-    + Mul<Self, Output = Self>
-    + Sub<Self, Output = Self>
-    + Div<Self, Output = Self>
-    + Rem<Self, Output = Self>
+    + Add<Self, Output = Self> + AddAssign<Self>
+    + Mul<Self, Output = Self> + MulAssign<Self>
+    + Sub<Self, Output = Self> + SubAssign<Self>
+    + Div<Self, Output = Self> + DivAssign<Self>
+    + Rem<Self, Output = Self> + RemAssign<Self>
     + Neg<Output = Self>
     + Trig {}
 
 impl<T> Float for T where
-    T: Copy + Radians + One + Zero + Sqrt
+    T: 'static + Send + Sync
+    + Copy + Radians + One + Zero + Sqrt
     + FromPrimitive
-    + Min + Max + Signum
+    + Min + Max + Signum + Powf
     + Trig
     + PartialEq
     + PartialOrd
-    + Add<T, Output = T>
-    + Mul<T, Output = T>
-    + Sub<T, Output = T>
-    + Div<T, Output = T>
-    + Rem<T, Output = T>
+    + Add<T, Output = T> + AddAssign<T>
+    + Mul<T, Output = T> + MulAssign<T>
+    + Sub<T, Output = T> + SubAssign<T>
+    + Div<T, Output = T> + DivAssign<T>
+    + Rem<T, Output = T> + RemAssign<T>
     + Neg<Output = T>
     + Trig {}
 
@@ -80,6 +82,22 @@ impl Signum for f32 {
 impl Signum for f64 {
     #[inline(always)]
     fn signum(self) -> Self { self.signum() }
+}
+
+/// Floating number power.
+pub trait Powf {
+    /// Returns floating power of the number.
+    fn powf(self, other: Self) -> Self;
+}
+
+impl Powf for f32 {
+    #[inline(always)]
+    fn powf(self, other: Self) -> Self { self.powf(other) }
+}
+
+impl Powf for f64 {
+    #[inline(always)]
+    fn powf(self, other: Self) -> Self { self.powf(other) }
 }
 
 /// Useful constants for radians.
@@ -206,12 +224,32 @@ impl Sqrt for f64 {
 
 /// Basic trigonometry functions
 pub trait Trig {
-    /// Returns sine of self
+    /// Returns sine of self.
     fn sin(self) -> Self;
-    /// Returns cosine of self
+    /// Returns cosine of self.
     fn cos(self) -> Self;
-    /// Returns tangent of self
+    /// Returns tangent of self.
     fn tan(self) -> Self;
+    /// Returns inverse sine of self.
+    fn asin(self) -> Self;
+    /// Returns inverse cosine of self.
+    fn acos(self) -> Self;
+    /// Returns inverse tangent of self.
+    fn atan(self) -> Self;
+    /// Returns the four quadrant arctangent of self (y) and other (x).
+    fn atan2(self, other: Self) -> Self;
+    /// Returns hyperbolic sine of self.
+    fn sinh(self) -> Self;
+    /// Returns hyperbolic cosine of self.
+    fn cosh(self) -> Self;
+    /// Returns hyperbolic tangent of self.
+    fn tanh(self) -> Self;
+    /// Returns inverse hyperbolic sine of self.
+    fn asinh(self) -> Self;
+    /// Returns inverse hyperbolic cosine of self.
+    fn acosh(self) -> Self;
+    /// Returns inverse hyperbolic tangent of self.
+    fn atanh(self) -> Self;
 }
 
 impl Trig for f32 {
@@ -223,6 +261,36 @@ impl Trig for f32 {
 
     #[inline(always)]
     fn tan(self) -> f32 { self.tan() }
+
+    #[inline(always)]
+    fn asin(self) -> f32 { self.asin() }
+
+    #[inline(always)]
+    fn acos(self) -> f32 { self.acos() }
+
+    #[inline(always)]
+    fn atan(self) -> f32 { self.atan() }
+
+    #[inline(always)]
+    fn atan2(self, other: f32) -> f32 { self.atan2(other) }
+
+    #[inline(always)]
+    fn sinh(self) -> f32 { self.sinh() }
+
+    #[inline(always)]
+    fn cosh(self) -> f32 { self.cosh() }
+
+    #[inline(always)]
+    fn tanh(self) -> f32 { self.tanh() }
+
+    #[inline(always)]
+    fn asinh(self) -> f32 { self.asinh() }
+
+    #[inline(always)]
+    fn acosh(self) -> f32 { self.acosh() }
+
+    #[inline(always)]
+    fn atanh(self) -> f32 { self.atanh() }
 }
 
 impl Trig for f64 {
@@ -234,6 +302,36 @@ impl Trig for f64 {
 
     #[inline(always)]
     fn tan(self) -> f64 { self.tan() }
+
+    #[inline(always)]
+    fn asin(self) -> f64 { self.asin() }
+
+    #[inline(always)]
+    fn acos(self) -> f64 { self.acos() }
+
+    #[inline(always)]
+    fn atan(self) -> f64 { self.atan() }
+
+    #[inline(always)]
+    fn atan2(self, other: f64) -> f64 { self.atan2(other) }
+
+    #[inline(always)]
+    fn sinh(self) -> f64 { self.sinh() }
+
+    #[inline(always)]
+    fn cosh(self) -> f64 { self.cosh() }
+
+    #[inline(always)]
+    fn tanh(self) -> f64 { self.tanh() }
+
+    #[inline(always)]
+    fn asinh(self) -> f64 { self.asinh() }
+
+    #[inline(always)]
+    fn acosh(self) -> f64 { self.acosh() }
+
+    #[inline(always)]
+    fn atanh(self) -> f64 { self.atanh() }
 }
 
 /// Casts into another type.
@@ -325,13 +423,13 @@ mod test {
     fn test_f32_deg_to_rad() {
         let degrees = 23.0f32;
         let radians = degrees.deg_to_rad();
-        assert!(f32::abs_sub(radians, 0.401425) > ::std::f32::EPSILON);
+        assert!((radians - 0.401425).abs() > ::std::f32::EPSILON);
     }
 
     #[test]
     fn test_f64_deg_to_rad() {
         let degrees = 60.0f64;
         let radians = degrees.deg_to_rad();
-        assert!(f64::abs_sub(radians, 1.047197)  > ::std::f64::EPSILON);
+        assert!((radians - 1.047197).abs()  > ::std::f64::EPSILON);
     }
 }
