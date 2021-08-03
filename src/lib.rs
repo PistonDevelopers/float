@@ -1,7 +1,7 @@
 #![deny(missing_docs)]
 
 //! Traits for generic floats in game programming
-use std::ops::*;
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Rem, RemAssign, Sub, SubAssign};
 
 /// Convenience trait for floats.
 pub trait Float:
@@ -138,12 +138,12 @@ impl Radians for f32 {
 
     #[inline(always)]
     fn deg_to_rad(self) -> Self {
-        self * (::std::f32::consts::PI / 180.0f32)
+        self * (::std::f32::consts::PI / 180.0_f32)
     }
 
     #[inline(always)]
     fn rad_to_deg(self) -> Self {
-        self * (180.0f32 / ::std::f32::consts::PI)
+        self * (180.0_f32 / ::std::f32::consts::PI)
     }
 }
 
@@ -165,12 +165,12 @@ impl Radians for f64 {
 
     #[inline(always)]
     fn deg_to_rad(self) -> Self {
-        self * (::std::f64::consts::PI / 180.0f64)
+        self * (::std::f64::consts::PI / 180.0_f64)
     }
 
     #[inline(always)]
     fn rad_to_deg(self) -> Self {
-        self * (180.0f64 / ::std::f64::consts::PI)
+        self * (180.0_f64 / ::std::f64::consts::PI)
     }
 }
 
@@ -407,29 +407,29 @@ mod test {
 
     #[test]
     fn test_f32_sqrt() {
-        let a = 4.0f32;
+        let a = 4.0_f32;
         let b = <f32 as Sqrt>::sqrt(a);
-        assert_eq!(b, 2.0f32);
+        assert!((b - 2.0_f32).abs() < f32::EPSILON)
     }
 
     #[test]
     fn test_f64_sqrt() {
-        let a = 4.0f64;
+        let a = 4.0_f64;
         let b = <f64 as Sqrt>::sqrt(a);
-        assert_eq!(b, 2.0f64);
+        assert!((b - 2.0_f64).abs() < f64::EPSILON)
     }
 
     #[test]
     fn test_f32_deg_to_rad() {
-        let degrees = 23.0f32;
+        let degrees = 23.0_f32;
         let radians = degrees.deg_to_rad();
-        assert!((radians - 0.401425).abs() > ::std::f32::EPSILON);
+        assert!((radians - 0.401_425).abs() > f32::EPSILON);
     }
 
     #[test]
     fn test_f64_deg_to_rad() {
-        let degrees = 60.0f64;
+        let degrees = 60.0_f64;
         let radians = degrees.deg_to_rad();
-        assert!((radians - 1.047197).abs()  > ::std::f64::EPSILON);
+        assert!((radians - std::f64::consts::FRAC_PI_3).abs()  == f64::EPSILON);
     }
 }
